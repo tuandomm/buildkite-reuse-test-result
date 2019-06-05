@@ -1,0 +1,8 @@
+name: hooks
+description: Run scripts as hooks
+author: Tony Do
+configuration:
+  properties:
+    precommand:
+      type: string
+  additionalProperties: false

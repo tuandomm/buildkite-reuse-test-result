@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -ueo pipefail
+
+# Improve: put this function in a common place
+function makeCheckSum {
+	rm -f /tmp/list.txt && touch /tmp/list.txt
+	cd ${BUILDKITE_BUILD_CHECKOUT_PATH}
+	find package*json ./src ./.buildkite ./cypress* ./docker* Makefile .spelling ./tools -type f | sort > /tmp/list.txt
+	xargs md5sum < /tmp/list.txt > /tmp/md5list.txt
+	md5sum /tmp/md5list.txt | awk '{print $1;}'
+}
+
+checksum=`makeCheckSum`
+cat /tmp/md5list.txt
+echo $checksum
+(aws s3 cp s3://mm-dev-syd-buildkite-artifacts/mmgp-frontend/test-results/$checksum /tmp/test-result && echo 'This test passed in another build' && exit 0) || (echo 'Will run the step')
