@@ -15,4 +15,5 @@ function makeCheckSum {
 checksum=`makeCheckSum`
 
 echo $checksum > /tmp/test-result
+# Improve: S3 bucket, repository name as plugin parameter
 aws s3 cp /tmp/test-result s3://mm-dev-syd-buildkite-artifacts/mmgp-frontend/test-results/$checksum
