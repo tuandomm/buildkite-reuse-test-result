@@ -5,6 +5,7 @@ set -ueo pipefail
 # Improve: put this function in a common place
 function makeCheckSum {
 	rm -f /tmp/list.txt && touch /tmp/list.txt
+	rm -f /tmp/md5list.txt && touch /tmp/md5list.txt
 	cd ${BUILDKITE_BUILD_CHECKOUT_PATH}
 	find package*json ./src ./.buildkite ./cypress* ./docker* Makefile .spelling ./tools -type f | sort > /tmp/list.txt
 	xargs md5sum < /tmp/list.txt > /tmp/md5list.txt
