@@ -12,6 +12,5 @@ function makeCheckSum {
 }
 
 checksum=`makeCheckSum`
-cat /tmp/md5list.txt
 echo $checksum
 (aws s3 cp s3://mm-dev-syd-buildkite-artifacts/mmgp-frontend/test-results/$checksum /tmp/test-result && echo 'This test passed in another build' && exit 0) || (echo 'Will run the step')
