@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -ueo pipefail
-env
 if [[ ${SHOULD_REUSE_TEST_RESULT} == 'false' ]]; then
     n=${BUILDKITE_BUILD_NUMBER}
     checksum=`cat /tmp/checksumid${n}.txt`
