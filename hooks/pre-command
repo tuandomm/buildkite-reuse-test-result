@@ -4,6 +4,7 @@ set -ueo pipefail
 
 env
 
+# just an alias so commands look shorter
 n=${BUILDKITE_BUILD_NUMBER}
 
 function makeCheckSum {
@@ -19,4 +20,12 @@ function makeCheckSum {
 checksum=`makeCheckSum`
 echo "Checksum of step $checksum"
 echo $checksum > /tmp/checksumid${n}.txt
-(aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n} && echo 'This test passed in another build' && exit 0) || (echo 'Will run the step')
+
+{ # try
+	aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n}
+	echo 'This test passed in another build'
+	exit 0
+} || { # catch
+	echo 'Will run the step'
+}
+
