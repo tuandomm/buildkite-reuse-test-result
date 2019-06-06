@@ -2,13 +2,15 @@
 
 set -ueo pipefail
 
+env
+
 n=${BUILDKITE_BUILD_NUMBER}
 
 function makeCheckSum {
 	rm -f /tmp/list${n}.txt && touch /tmp/list${n}.txt
 	rm -f /tmp/md5list${n}.txt && touch /tmp/md5list${n}.txt
 	cd ${BUILDKITE_BUILD_CHECKOUT_PATH}
-	find ${BUILDKITE_BUILD_CHECKOUT_INCLUDES} -type f | sort > /tmp/list${n}.txt
+	find ${BUILDKITE_PLUGIN_REUSETESTRESULT_INCLUDES} -type f | sort > /tmp/list${n}.txt
 	xargs md5sum < /tmp/list${n}.txt > /tmp/md5list${n}.txt
 	echo ${BUILDKITE_PLUGIN_REUSETESTRESULT_STEP} >> /tmp/md5list${n}.txt
 	md5sum /tmp/md5list${n}.txt | awk '{print $1;}'
