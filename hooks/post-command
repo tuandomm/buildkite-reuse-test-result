@@ -1,10 +1,10 @@
 #!/bin/bash
 
 set -ueo pipefail
-
-n=${BUILDKITE_BUILD_NUMBER}
-
-checksum=`cat /tmp/checksumid${n}.txt`
-
-env > /tmp/test-result${n}
-aws s3 cp /tmp/test-result${n} s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum
+env
+if [[ ${SHOULD_REUSE_TEST_RESULT} == 'false' ]]; then
+    n=${BUILDKITE_BUILD_NUMBER}
+    checksum=`cat /tmp/checksumid${n}.txt`
+    env > /tmp/test-result${n}
+    aws s3 cp /tmp/test-result${n} s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum
+fi

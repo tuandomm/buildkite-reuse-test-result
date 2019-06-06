@@ -1,10 +1,11 @@
 #!/bin/bash
 
 set -ueo pipefail
-
+env
 # just an alias so commands look shorter
 n=${BUILDKITE_BUILD_NUMBER}
 
+export SHOULD_REUSE_TEST_RESULT=false
 function makeCheckSum {
 	rm -f /tmp/list${n}.txt && touch /tmp/list${n}.txt
 	rm -f /tmp/md5list${n}.txt && touch /tmp/md5list${n}.txt
