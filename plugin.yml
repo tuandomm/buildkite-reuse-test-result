@@ -1,8 +1,14 @@
-name: hooks
-description: Run scripts as hooks
+name: reusetestresult
+description: Reuse good test result
 author: Tony Do
 configuration:
   properties:
-    precommand:
+    bucket:
+      type: string
+    repo:
+      type: string
+    includes:
+      type: string
+    step:
       type: string
   additionalProperties: false
