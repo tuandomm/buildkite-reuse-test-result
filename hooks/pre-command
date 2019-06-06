@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -ueo pipefail
-env
 # just an alias so commands look shorter
 n=${BUILDKITE_BUILD_NUMBER}
 # only works with command defined in BUILDKITE_COMMAND & together with docker-compose plugin

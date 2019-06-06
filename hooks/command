@@ -5,6 +5,7 @@ set -ueo pipefail
 # just an alias so commands look shorter
 n=${BUILDKITE_BUILD_NUMBER}
 
+pwd
 if [[ ${SHOULD_REUSE_TEST_RESULT} == 'true' ]]; then
     echo 'This test passed in another build, here is the detail:'
     cat /tmp/test-result${n}
