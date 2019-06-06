@@ -23,8 +23,10 @@ echo $checksum > /tmp/checksumid${n}.txt
 
 { # try
 	aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n}
-	echo 'This test passed in another build'
-	exit 0
+	checkResult='This test passed in another build'
+	echo ${checkResult}
+	export BUILDKITE_SCRIPT_PATH="echo ${checkResult}"
+	# exit 0
 } || { # catch
 	echo 'Will run the step'
 }
