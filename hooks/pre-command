@@ -20,13 +20,13 @@ function makeCheckSum {
 checksum=`makeCheckSum`
 echo "Checksum of step $checksum"
 echo $checksum > /tmp/checksumid${n}.txt
-
+echo $$
 { # try
-	aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n}
-	checkResult='This test passed in another build'
-	echo ${checkResult}
-	export BUILDKITE_SCRIPT_PATH="echo ${checkResult}"
-	# exit 0
+    echo $$
+	aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n} && \
+	checkResult='This test passed in another build' && \
+	echo ${checkResult} && \
+	export BUILDKITE_SCRIPT_PATH="echo ${checkResult}" && export TONY=1
 } || { # catch
 	echo 'Will run the step'
 }
