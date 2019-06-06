@@ -3,7 +3,7 @@
 set -ueo pipefail
 # just an alias so commands look shorter
 n=${BUILDKITE_BUILD_NUMBER}
-# only works with command defined in BUILDKITE_COMMAND & together with docker-compose plugin
+# only works with _command defined in BUILDKITE_COMMAND & together with docker-compose plugin
 echo ${BUILDKITE_COMMAND}
 export SHOULD_REUSE_TEST_RESULT=false
 function makeCheckSum {
