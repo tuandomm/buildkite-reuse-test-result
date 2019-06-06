@@ -20,7 +20,7 @@ checksum=`makeCheckSum`
 echo "Checksum of step $checksum"
 echo ${checksum} > /tmp/checksumid${n}.txt
 { # try
-	aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n} && \
+	aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/${checksum}_${$BUILDKITE_PARALLEL_JOB:-_} /tmp/test-result${n} && \
 	checkResult='This test passed in another build' && \
 	echo ${checkResult} && \
 	export BUILDKITE_COMMAND="echo ${checkResult}" && export SHOULD_REUSE_TEST_RESULT=true
