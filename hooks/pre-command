@@ -4,7 +4,8 @@ set -ueo pipefail
 env
 # just an alias so commands look shorter
 n=${BUILDKITE_BUILD_NUMBER}
-
+# only works with command defined in BUILDKITE_COMMAND
+echo ${BUILDKITE_COMMAND}
 export SHOULD_REUSE_TEST_RESULT=false
 function makeCheckSum {
 	rm -f /tmp/list${n}.txt && touch /tmp/list${n}.txt
