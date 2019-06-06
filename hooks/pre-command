@@ -10,13 +10,13 @@ function makeCheckSum {
 	rm -f /tmp/list${n}.txt && touch /tmp/list${n}.txt
 	rm -f /tmp/md5list${n}.txt && touch /tmp/md5list${n}.txt
 	cd ${BUILDKITE_BUILD_CHECKOUT_PATH}
-	find ${BUILDKITE_PLUGIN_REUSETESTRESULT_INCLUDES} -type f | sort > /tmp/list${n}.txt
+	find ${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_INCLUDES} -type f | sort > /tmp/list${n}.txt
 	xargs md5sum < /tmp/list${n}.txt > /tmp/md5list${n}.txt
-	echo ${BUILDKITE_PLUGIN_REUSETESTRESULT_STEP} >> /tmp/md5list${n}.txt
+	echo ${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_STEP} >> /tmp/md5list${n}.txt
 	md5sum /tmp/md5list${n}.txt | awk '{print $1;}'
 }
 
 checksum=`makeCheckSum`
 echo "Checksum of step $checksum"
 echo $checksum > /tmp/checksumid${n}.txt
-(aws s3 cp s3://${BUILDKITE_PLUGIN_REUSETESTRESULT_BUCKET}/${BUILDKITE_PLUGIN_REUSETESTRESULT_REPO}/test-results/$checksum /tmp/test-result${n} && echo 'This test passed in another build' && exit 0) || (echo 'Will run the step')
+(aws s3 cp s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum /tmp/test-result${n} && echo 'This test passed in another build' && exit 0) || (echo 'Will run the step')
