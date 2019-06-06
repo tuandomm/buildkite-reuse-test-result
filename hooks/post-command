@@ -1,9 +1,10 @@
 #!/bin/bash
-env
 set -ueo pipefail
 if [[ ${SHOULD_REUSE_TEST_RESULT} == 'false' ]] && [[ ${BUILDKITE_COMMAND_EXIT_STATUS} == "0" ]]; then
     n=${BUILDKITE_BUILD_NUMBER}
     checksum=`cat /tmp/checksumid${n}.txt`
     env > /tmp/test-result${n}
     aws s3 cp /tmp/test-result${n} s3://${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_BUCKET}/${BUILDKITE_PLUGIN_BUILDKITE_REUSE_TEST_RESULT_GIT_REPO}/test-results/$checksum
+else
+    echo 'Should not upload test result'
 fi

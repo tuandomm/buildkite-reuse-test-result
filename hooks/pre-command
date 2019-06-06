@@ -28,4 +28,3 @@ echo ${checksum} > /tmp/checksumid${n}.txt
 } || { # catch
 	echo 'Will run the step'
 }
-ps fx

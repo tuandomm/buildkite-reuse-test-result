@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -ueo pipefail
+echo plugin_reuse
+exit 0
